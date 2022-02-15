@@ -36,11 +36,22 @@ function get_safe_value($con , $str){
 <DOCTYPE HTML> 
 <html>
     <head>
+	<title>UserList</title>
+		<style>
+			th, td {
+                text-align: left;
+                padding: 16px;
+            }
+			tr:nth-child(even) {
+                background-color: #f2f2f2;
+			}
+		</style>
     </head>
     <body>
 	<h1 style="text-align: center;"><b>Users And Their Status</b></h1>
-        <form>
-        <table border = '|' style="border:1px solid black;margin-left: auto; margin-right:auto;border-collapse: separate; border-spacing:15px 15px">
+        <div style="overflow-x:auto;">
+		
+        <table  style="border:1px solid black;margin-left: auto; margin-right:auto;border-collapse: separate;border-spacing: 0;width:90%">
 			<thead>
 				<tr>
                     <th>#</th>
@@ -75,6 +86,6 @@ function get_safe_value($con , $str){
 				<?php } ?>
 			</tbody>
 		</table>
-        </form>
+		</div>
     </body>
 </html>

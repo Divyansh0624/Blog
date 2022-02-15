@@ -24,10 +24,6 @@ if(isset($_POST['save'])){
     die();
     }
 }
-if(isset($_POST['back'])){
-    header('location:blog.php');
-
-}
 function get_safe_value($con , $str){
     if($str!=''){
         return(mysqli_real_escape_string($con, $str));
@@ -35,29 +31,87 @@ function get_safe_value($con , $str){
 }
 ?>
 
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>NewBlog</title>
-    </head>
-    <body>
-        <form method="POST">
-        <table>
-           <tr>
-                <td><label><b>Blog Name</b></label></td>
-                <td><input type="text" name="name" placeholder="Enter Blog Name" required></td>   
-            </tr>
-            <tr>
-                <td><label><b>Blog</b></label></td>
-                <td><textarea name="blog" cols="100" rows="30" required></textarea></td>  
-            </tr>
-            <tr>
-                <td></td>                
-                <td><button type="submit" name="back">Back</button></td>
-                <td><button type="submit" name="save">Save</button></td>
-            </tr>
-            
-        </table>
-        </form>
-    </body>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NewBlog</title>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: grey;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.savebtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.savebtn:hover {
+  opacity: 1;
+}
+
+</style>
+</head>
+<body>
+
+<form method="POST">
+  <div class="container">
+    <h1>Create Your New Blog!</h1>
+    <a href="blog.php" style="float:right;">BACK</a>
+    <hr>
+    <label><b>BLOG NAME</b></label>
+    <input type="text" placeholder="Enter Your Blog Name" name="name" id="email" required>
+
+    <label><b>BLOG</b></label>
+    <textarea style="width: 100%;
+                    padding: 15px;
+                    margin: 5px 0 22px 0;
+                    display: inline-block;
+                    border: none;
+                    background: #f1f1f1;" name="blog" rows="10" placeholder="Enter Your Blog Description"  required></textarea>
+    <hr>
+    <button type="submit" class="savebtn" name = "save">SAVE</button>
+  </div>
+</form>
+
+</body>
 </html>

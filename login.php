@@ -2,7 +2,7 @@
 require('connection.inc.php');
 $msg = " ";
 if (isset($_POST['submit'])) {
-    $username = get_safe_value($con, $_POST['username']);
+    $username = get_safe_value($con, $_POST['name']);
     $password = get_safe_value($con, $_POST['password']);
     $sql = "select * from `user` where email = '$username' and password = '$password'";
     $res = mysqli_query($con, $sql);
@@ -26,36 +26,93 @@ function get_safe_value($con , $str){
     }
 }
 ?>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            LOGIN 
-        </title>
-    </head>
-    <body>
-	<h1 style="text-align: center;"><b>LOGIN!</b></h1>
-    <div style="text-align: center;"><?php if(isset($_GET['Message'])){
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {
+    border: 3px solid #f1f1f1;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    height:80%;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+<div style="text-align: center;"><?php if(isset($_GET['Message'])){
         echo $_GET['Message'];
     }?></div>
-    <form method="POST">
-        <table style="margin-left: auto; margin-right:auto;border-collapse: separate; border-spacing:15px 15px">
-            <tr>
-                <td><label><b>Username</b></label></td>
-                <td><input type="text" name="username" placeholder="Email" required></td>   
-            </tr>
-            <tr>
-                <td><label><b>Password</b></label></td>
-                <td><input type="password" name="password" placeholder="Password" required></td>
-            </tr>
-            <tr>
-                <td><button type="submit" name="back">Back</button></td>
-                
-                <td><button type="submit" name="submit" data-theme="b">LogIn</button></td>
-            </tr>
-        </table>
-    </form>
-    <div style="text-align:center;"><?php echo $msg ?></div>
+<h2 style="text-align: center;"> Login Form</h2>
+<form method="post">
+  <div class="container">
+    <label ><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="name" required>
 
-    </body>
+    <label ><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>
+        
+    <button type="submit" name="submit">Login</button>
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <button type="submit" class="cancelbtn" name="back">Cancel</button>
+    <span class="psw"><a href="index.php">Back?</a></span>
+  </div>
+</form>
+
+</body>
 </html>

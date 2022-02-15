@@ -14,17 +14,21 @@ else{
     <head>
         <title>MyBlogs</title>
     </head>
+    <style>
+        
+        .column {
+        float: left;
+        padding: 10px;
+        }
+        
+        .left {
+         width: 75%;
+        }
+        
+    </style>
     <body>
     <section>
-        <div style="background-color:grey ;color:brown;" >
-            <!-- <table>
-                <tr>
-                    <td><h1><b>Blogs &nbsp;&nbsp;&nbsp;&nbsp;</b></h1></td>
-                    <td><a href='create.php'>CreateNew</a>-&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td><a href='edit.php'>Edit</a>-&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td><a href='list.php'>UserList</a>-&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                </tr>
-            </table> -->
+        <div style="background-color:grey ;color:brown; width:77%;" >
             <h1 style="text-align: center;"><b>BLOGS</b></h1>
         </div>
         <div style="text-align:right">
@@ -32,13 +36,13 @@ else{
             <a href='edit.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">LogOut</a>
             <a href='list.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">UserList</a>
         </div>
-        <div style="background-color:skyblue ;color:black; padding-left: 50px; padding-right:50px">
+        <div style=" padding-left: 50px; padding-right:50px" class="row">
             <form action="" method="POST">
-                <div>
-                <?php 
+                <div class="coloum left">
+                    <?php 
 					$i=1;
 					while($row = mysqli_fetch_assoc($res)){?>
-					<h2 style="text-align: center;">
+					<h2 style="text-align: center;background-color:skyblue ;color:black;">
 					  <b> <?php echo $row['blog_name']?><br> </b>
                     </h2>
                     <p>
@@ -51,4 +55,7 @@ else{
         </div>
       </section>
     </body>
-</html>
+</html> 
+
+
+
