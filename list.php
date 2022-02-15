@@ -45,12 +45,20 @@ function get_safe_value($con , $str){
 			tr:nth-child(even) {
                 background-color: #f2f2f2;
 			}
+			span.psw {
+				float: right;
+				
+			}
 		</style>
     </head>
     <body>
-	<h1 style="text-align: center;"><b>Users And Their Status</b></h1>
+	<form method="POST">
+		<div>
+		<span class="psw"><a href="blog.php">BACK</a></span>
+		<h1 style="text-align: center;"><b>Users And Their Status</b></h1>
+		</div>
+	
         <div style="overflow-x:auto;">
-		
         <table  style="border:1px solid black;margin-left: auto; margin-right:auto;border-collapse: separate;border-spacing: 0;width:90%">
 			<thead>
 				<tr>
@@ -87,5 +95,7 @@ function get_safe_value($con , $str){
 			</tbody>
 		</table>
 		</div>
+
+		</form>
     </body>
 </html>
