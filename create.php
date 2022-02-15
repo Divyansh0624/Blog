@@ -1,11 +1,24 @@
-<?php 
+<?php
+
+use PhpMyAdmin\MoTranslator\Loader;
+
 require('connection.inc.php');
 if(isset($_POST['save'])){
     if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!=''){
         $data = $_SESSION['USER_USERNAME'];
-        $sql = 
-        $name = get_safe_value($con, $_POST['name']);
-        $blog= get_safe_value($con, $_POST['blog']);
+        $sql = "select id from `user` where email = '$data '";
+        $res = mysqli_query($con,$sql);
+        if(mysqli_num_rows($res) > 0){
+            $set = mysqli_fetch_assoc($res);
+            $id = $set['id'];
+            $name = get_safe_value($con, $_POST['name']);
+            $blog= get_safe_value($con, $_POST['blog']);
+            $sql = "insert into `blog` (`user_id`, `blog_name`, `blog`) VALUES ('$id', '$name', '$blog') ";
+            mysqli_query($con,$sql);
+            header('location:blog.php');
+        }else{
+            header('location:login.php');
+        }
     }else{
     header('location:login.php');
     die();
