@@ -1,10 +1,7 @@
-<?php
-
-use PhpMyAdmin\MoTranslator\Loader;
-
+<?php 
 require('connection.inc.php');
-if(isset($_POST['save'])){
-    if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!=''){
+if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!=''){
+    if(isset($_POST['save'])){
         $data = $_SESSION['USER_USERNAME'];
         $sql = "select id from `user` where email = '$data '";
         $res = mysqli_query($con,$sql);
@@ -19,10 +16,10 @@ if(isset($_POST['save'])){
         }else{
             header('location:login.php');
         }
-    }else{
+    }
+}else{
     header('location:login.php');
     die();
-    }
 }
 function get_safe_value($con , $str){
     if($str!=''){

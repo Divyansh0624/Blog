@@ -108,8 +108,8 @@ a {
 
 <form method="POST">
   <div class="container">
-    <h1>Register</h1>
-    <p>Please fill in this form to create an account.</p>
+    <h1 style="text-align: center;">Register!</h1>
+    <p style="text-align: center;">Please fill in this form to create an account.</p>
     <hr>
     <label><b>NAME</b></label>
     <input type="text" placeholder="Enter Your Name" name="name" id="email" required>

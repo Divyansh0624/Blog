@@ -23,7 +23,7 @@ if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!=''){
 
     $res = mysqli_query($con,$sql);
 }else{
-	header('location:index.php');
+	header('location:login.php');
 	die();
 }
 

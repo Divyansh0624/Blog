@@ -33,7 +33,7 @@ else{
         </div>
         <div style="text-align:right">
             <a href='create.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">CreateNew</a>
-            <a href='edit.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">LogOut</a>
+            <a href='logout.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">LogOut</a>
             <a href='list.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">UserList</a>
         </div>
         <div style=" padding-left: 50px; padding-right:50px" class="row">
