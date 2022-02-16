@@ -178,7 +178,7 @@ p{
     <input type="text" placeholder="Enter Your Name" name="name" id="email" required>
     
     <label><b>EMAIL</b><p><?php echo $emailErr; ?></p></label>
-    <input type="text" placeholder="Enter Email" name="email" id="email" required>
+    <input type="text" placeholder="Enter Email as username" name="email" id="email" required>
 
     <label><b>PHONE NUMBER</b><p><?php echo $phoneErr; ?></P></label>
     <input type="text" placeholder="Enter Phone Number" name="phone" id="email" required>
@@ -190,7 +190,7 @@ p{
                     margin: 5px 0 22px 0;
                     display: inline-block;
                     border: none;
-                    background: #f1f1f1;" name="address" cols="20" rows="4" placeholder="Enter Your Permanet Address" id= "psw" required></textarea>
+                    background: #f1f1f1;" name="address" cols="20" rows="4" placeholder="Enter Your Permanent Address" id= "psw" required></textarea>
     
 
     <label><b>PASSWORD</b><p ><?php echo $passwordErr; ?><p></label>
