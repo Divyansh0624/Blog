@@ -18,24 +18,25 @@ else{
         
         .column {
         float: left;
-        padding: 10px;
+        padding: 50px;
         }
         
         .left {
-         width: 75%;
+         width: 95%;
         }
         
     </style>
     <body>
     <section>
-        <div style="background-color:grey ;color:brown; width:77%;" >
+        <div style="background-color:grey ;color:brown; width:100%;" >
             <h1 style="text-align: center;"><b>BLOGS</b></h1>
+            <div style="text-align:right;">
+            <a href='create.php' style="display:inline;color:black;background:grey;text-align:center;">CreateNew</a>&nbsp;
+            <a href='list.php' style="display:inline;color:blue;backgroundgrey;text-align:center;">UserList</a>&nbsp;
+            <a href='logout.php' style=" display:inline;color:red;background:grey;text-align:center;">LogOut</a>
+            </div>
         </div>
-        <div style="text-align:right">
-            <a href='create.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">CreateNew</a>
-            <a href='logout.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">LogOut</a>
-            <a href='list.php' style="display:inline; width:80px; height:25px;color:blue;background:white;text-align:center;">UserList</a>
-        </div>
+        
         <div style=" padding-left: 50px; padding-right:50px" class="row">
             <form action="" method="POST">
                 <div class="coloum left">

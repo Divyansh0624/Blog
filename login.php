@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
         header('location:blog.php');
         die();
     } else {
-        $msg = "Please Enter Correct login details Or Register Yourself First";
+        $msg = "Please Enter Correct login details <br> If you are new than register Yourself First!";
     }
 }
 elseif(isset($_POST['back'])){
@@ -100,12 +100,13 @@ span.psw {
 <form method="post">
   <div class="container">
     <label ><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="name" required>
+    <input type="text" placeholder="Enter Username" name="name" value="" required>
 
     <label ><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="password" required>
+    <input type="password" placeholder="Enter Password" name="password" value="" required>
         
     <button type="submit" name="submit">Login</button>
+    <div style="text-align: center; color:#f44336"><?php echo $msg ;?></div>
   </div>
 
   <div class="container" style="background-color:#f1f1f1">

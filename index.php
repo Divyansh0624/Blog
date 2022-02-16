@@ -41,8 +41,8 @@ elseif(isset($_POST['register'])){
         <h1 style="text-align: center;background-color:skyblue"><b>Welcome to our Blog family!</b></h1>
         <table class="table">
             <tr>
-            <td><button type="submit" name="login" style="background-color: skyblue;">LogIn</button></td>
-            <td><button type="submit" name="register" style="background-color:aquamarine;">Register</button></td>
+            <td><button type="submit" name="login" style="background-color: skyblue;cursor: pointer;">LogIn</button></td>
+            <td><button type="submit" name="register" style="background-color:aquamarine;cursor: pointer;">Register</button></td>
             </tr>
         </table>
         <h3>What is a Blog ?</h3>

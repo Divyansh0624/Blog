@@ -76,7 +76,7 @@ function get_safe_value($con , $str){
 				$i=1;
 				while($row = mysqli_fetch_assoc($res)){?>
 				<tr>
-					<td ><?php echo $i?></td>
+					<td ><?php echo $i;$i++;?></td>
 					<td><?php echo $row['id']?></td>
 				    <td><?php echo $row['name']?></td>
 					<td><?php echo $row['email']?></td>
