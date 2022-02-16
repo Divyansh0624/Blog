@@ -28,8 +28,8 @@ else{
     </style>
     <body>
     <section>
-        <div style="background-color:grey ;color:brown; width:100%;" >
-            <h1 style="text-align: center;"><b>BLOGS</b></h1>
+        <div style="background-color:grey ; width:100%;opacity:0.9" >
+            <h1 style="text-align: center;color:darkblue;"><b>BLOGS</b></h1>
             <div style="text-align:right;">
             <a href='create.php' style="display:inline;color:black;background:grey;text-align:center;">CreateNew</a>&nbsp;
             <a href='list.php' style="display:inline;color:blue;backgroundgrey;text-align:center;">UserList</a>&nbsp;
