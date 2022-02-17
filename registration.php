@@ -26,6 +26,9 @@ if (isset($_POST['save'])) {
             $emailErr = "Invalid email format.<br/>";
           }else{
             $email = get_safe_value($con,$_POST["email"]);
+            if(mysqli_num_rows(mysqli_query($con , "select * from user where email = '$email'"))>0){
+                $emailErr = "Email Already Present.<br/>";
+            }
           }
     }
     #Phone Number Validation
@@ -64,10 +67,11 @@ if (isset($_POST['save'])) {
             $passwordErr = "Your Password Must Contain At Least 1 Special Character!.<br/>";
         }
         else{
-        $password = get_safe_value($con,$_POST["password"]);
+            //$password = get_safe_value($con , $_POST['password']);
+            $password  = password_hash($_POST['password'],PASSWORD_DEFAULT);
         }
     }
-    if($nameErr==''&&$emailErr==''&&$phoneErr==''&&$addressErr==''&&$passwordErr==''){
+    if($nameErr==''&& $emailErr==''&& $phoneErr==''&& $addressErr==''&& $passwordErr==''){
         $sql = "insert into `user` (`name`, `email`, `phone`, `address`, `password`,`status`) VALUES ('$name', '$email', '$phone', '$address', '$password','1')";
         //$res = mysqli_query($con, $sql);
         //echo $res;
@@ -178,7 +182,7 @@ p{
     <input type="text" placeholder="Enter Your Name" name="name" id="email" required>
     
     <label><b>EMAIL</b><p><?php echo $emailErr; ?></p></label>
-    <input type="text" placeholder="Enter Email as username" name="email" id="email" required>
+    <input type="text" placeholder="Enter Email as Username" name="email" id="email" required>
 
     <label><b>PHONE NUMBER</b><p><?php echo $phoneErr; ?></P></label>
     <input type="text" placeholder="Enter Phone Number" name="phone" id="email" required>
@@ -193,7 +197,7 @@ p{
                     background: #f1f1f1;" name="address" cols="20" rows="4" placeholder="Enter Your Permanent Address" id= "psw" required></textarea>
     
 
-    <label><b>PASSWORD</b><p ><?php echo $passwordErr; ?><p></label>
+    <label><b>PASSWORD</b><p ><?php echo $passwordErr;?><p></label>
     <input type="password" placeholder="Enter Password" name="password" id="psw" required>
     
 

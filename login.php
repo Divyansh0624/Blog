@@ -4,15 +4,22 @@ $msg = " ";
 if (isset($_POST['submit'])) {
     $username = get_safe_value($con, $_POST['name']);
     $password = get_safe_value($con, $_POST['password']);
-    $sql = "select * from `user` where email = '$username' and password = '$password'";
+    $sql = "select * from `user` where email = '$username'";
     $res = mysqli_query($con, $sql);
     $count = mysqli_num_rows($res);
-    //$rows = mysqli_fetch_assoc($res);
-    if ($count > 0 ) {
-        $_SESSION['USER_LOGIN'] = 'yes';
-        $_SESSION['USER_USERNAME'] = $username;
-        header('location:blog.php');
-        die();
+    if($count > 0){
+        $cnt = 0;
+        while($row = mysqli_fetch_assoc($res)){
+            if(password_verify($password , $row['password'])){
+                $cnt = 1;
+                $_SESSION['USER_LOGIN'] = 'yes';
+                $_SESSION['USER_USERNAME'] = $username;
+                header('location:blog.php');
+                die();
+            }
+        }if($cnt===0){
+            $msg = "Password is Incorrect";
+        }
     } else {
         $msg = "Please Enter Correct login details <br> If you are new than register Yourself First!";
     }
