@@ -95,7 +95,6 @@ function get_safe_value($con , $str){
 			</tbody>
 		</table>
 		</div>
-
 		</form>
     </body>
 </html>

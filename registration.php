@@ -1,6 +1,6 @@
 <?php
 require('connection.inc.php');
-$msg = " ";
+$msg = "";
 $name="";
 $email="";
 $phone="";
@@ -33,7 +33,7 @@ if (isset($_POST['save'])) {
     }
     #Phone Number Validation
     if (empty($_POST["phone"])) {
-        $phoneErr = "Phone is required.<br/>";
+        $phoneErr = "Phone Number is required.<br/>";
     } else {
         if(!preg_match('/^[0-9]{10}+$/', $_POST["phone"])){
             $phoneErr = "Invalid Phone Number.<br/>";
@@ -179,13 +179,13 @@ p{
     <h3 style="text-align: center;">Please fill in this form to create an account.</h3>
     <hr>
     <label><b>NAME</b><p><?php echo $nameErr; ?></p></label>
-    <input type="text" placeholder="Enter Your Name" name="name" id="email" required>
+    <input type="text" placeholder="Enter Your Name" name="name" id="email" value="<?php echo $name ?>" required>
     
     <label><b>EMAIL</b><p><?php echo $emailErr; ?></p></label>
-    <input type="text" placeholder="Enter Email as Username" name="email" id="email" required>
+    <input type="text" placeholder="Enter Email as Username" name="email" id="email" value="<?php echo $email ?>" required>
 
     <label><b>PHONE NUMBER</b><p><?php echo $phoneErr; ?></P></label>
-    <input type="text" placeholder="Enter Phone Number" name="phone" id="email" required>
+    <input type="text" placeholder="Enter Phone Number" name="phone" id="email" value="<?php echo $phone ?>" required>
     
 
     <label><b>ADDRESS</b><p><?php echo $addressErr; ?></P></label>
@@ -194,7 +194,7 @@ p{
                     margin: 5px 0 22px 0;
                     display: inline-block;
                     border: none;
-                    background: #f1f1f1;" name="address" cols="20" rows="4" placeholder="Enter Your Permanent Address" id= "psw" required></textarea>
+                    background: #f1f1f1;" name="address" cols="20" rows="4" placeholder="Enter Your Permanent Address" id= "psw" value="<?php echo $address ?>" required></textarea>
     
 
     <label><b>PASSWORD</b><p ><?php echo $passwordErr;?><p></label>
@@ -209,6 +209,5 @@ p{
     <p>Already have an account? <a href="login.php">Sign in</a>.</p>
   </div>
 </form>
-
 </body>
 </html>
