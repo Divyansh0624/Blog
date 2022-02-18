@@ -3,6 +3,9 @@ require('connection.inc.php');
 $msg = " ";
 $username = "";
 $password = "";
+if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!=''){
+    header('location:blog.php');
+}
 if (isset($_POST['submit'])) {
     $username = get_safe_value($con, $_POST['name']);
     $password = get_safe_value($con, $_POST['password']);
@@ -113,7 +116,7 @@ function get_safe_value($con , $str){
     <div style="text-align: center;"><?php if(isset($_GET['Message'])){
         echo $_GET['Message'];
     }?></div>
-    <h2 style="text-align: center;"> Login Form</h2>
+    <h2 style="text-align: center;">Welcome Back!</h2>
     <form method="post">
         <div class="container">
             <label><b>Username</b></label>

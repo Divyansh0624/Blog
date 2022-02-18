@@ -32,6 +32,7 @@ else{
             <h1 style="text-align: center;color:darkblue;"><b>BLOGS</b></h1>
             <div style="text-align:right;">
             <a href='create.php' style="display:inline;color:black;background:grey;text-align:center;">CreateNew</a>&nbsp;
+            <a href='myblog.php' style="display:inline;color:black;background:grey;text-align:center;">MyBlogs</a>&nbsp;
             <a href='list.php' style="display:inline;color:blue;backgroundgrey;text-align:center;">UserList</a>&nbsp;
             <a href='logout.php' style=" display:inline;color:red;background:grey;text-align:center;">LogOut</a>
             </div>

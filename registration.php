@@ -194,7 +194,7 @@ p{
                     margin: 5px 0 22px 0;
                     display: inline-block;
                     border: none;
-                    background: #f1f1f1;" name="address" cols="20" rows="4" placeholder="Enter Your Permanent Address" id= "psw" value="<?php echo $address ?>" required></textarea>
+                    background: #f1f1f1;" name="address" rows="4" placeholder="Enter Your Permanent Address" id= "psw"required></textarea>
     
 
     <label><b>PASSWORD</b><p ><?php echo $passwordErr;?><p></label>
