@@ -16,28 +16,28 @@ elseif(isset($_POST['register'])){
     <title>BLOG WEBSITE</title>
 </head>
 <style>
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-        background-color: aliceblue;
-    }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: aliceblue;
+}
 
-    p {
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
+p {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 
-    }
+}
 
-    h3 {
-        margin-left: 10%;
-        height: 27px;
-        padding-top: 5px;
+h3 {
+    margin-left: 10%;
+    height: 27px;
+    padding-top: 5px;
 
-    }
+}
 
-    table {
-        float: right;
-    }
+table {
+    float: right;
+}
 </style>
 
 <body>
