@@ -1,19 +1,18 @@
-<?php 
+<?php
 require('connection.inc.php');
 $msg = "";
-if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!=''){
+if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
     $data = $_SESSION['USER_USERNAME'];
     $id_query = "select id from `user` where email='$data' ";
-    $res = mysqli_query($con,$id_query);
+    $res = mysqli_query($con, $id_query);
     $set = mysqli_fetch_assoc($res);
     $id = $set['id'];
     $sql = "select * from `blog` where user_id = '$id' ";
-    $res = mysqli_query($con,$sql);
-    if(mysqli_num_rows($res)<1){
-        $msg = "You Have Not Created Any Blog Till Now";
+    $res = mysqli_query($con, $sql);
+    if (mysqli_num_rows($res) < 1) {
+        $msg = "You Have Not Created Any Blog Till Now!";
     }
-}
-else{
+} else {
     header('location:login.php');
 }
 ?>
@@ -49,26 +48,17 @@ else{
             <a href="blog.php" style="float:right;">BACK</a>
             <hr>
             <?php
-                echo "<h2>".$msg."</h2>";
-				while($row = mysqli_fetch_assoc($res)){?>
+            echo "<h2>" . $msg . "</h2>";
+            while ($row = mysqli_fetch_assoc($res)) { ?>
             <h2 style="text-align: center;background-color:skyblue ;color:black;">
-                <b><?php echo $row['blog_name'];?><br></b>
+                <b><?php echo $row['blog_name']; ?><br></b>
             </h2>
-            <!-- <textarea style="width: 100%;
-                    font-family: Arial, Helvetica, sans-serif;
-                    padding: 15px;
-                    margin: 5px 0 22px 0;
-                    display: inline-block;
-                    border: none;
-                    background: #f1f1f1;" name="blog" rows="10" >
-                    <?php  echo $row['blog']  ?>
-                </textarea> -->
             <p>
-                <?php echo $row['blog']?>
+                <?php echo $row['blog'] ?>
             </p>
             <br>
             <div style="text-align: right;">
-                <a href="edit.php?body=<?php echo $row['id'];?>" style="color:crimson">Edit</a>
+                <a href="edit.php?body=<?php echo $row['id']; ?>" style="color:crimson">Edit</a>
             </div>
             <?php } ?>
             <hr>

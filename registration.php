@@ -1,21 +1,21 @@
 <?php
 require('connection.inc.php');
 $msg = "";
-$name="";
-$email="";
-$phone="";
-$address="";
-$password="";
-$nameErr=$emailErr=$phoneErr=$addressErr=$passwordErr="";
+$name = "";
+$email = "";
+$phone = "";
+$address = "";
+$password = "";
+$nameErr = $emailErr = $phoneErr = $addressErr = $passwordErr = "";
 if (isset($_POST['save'])) {
     #Name Validation
     if (empty($_POST["name"])) {
         $nameErr = "Name is required.<br/>";
     } else {
-        if (!preg_match("/^[a-zA-Z-' ]*$/",$_POST["name"])) {
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"])) {
             $nameErr = "Only letters and white space allowed.<br/>";
-        }else{
-        $name = get_safe_value($con,$_POST["name"]);
+        } else {
+            $name = get_safe_value($con, $_POST["name"]);
         }
     }
     #Email Validation
@@ -24,28 +24,28 @@ if (isset($_POST['save'])) {
     } else {
         if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
             $emailErr = "Invalid email format.<br/>";
-          }else{
-            $email = get_safe_value($con,$_POST["email"]);
-            if(mysqli_num_rows(mysqli_query($con , "select * from user where email = '$email'"))>0){
+        } else {
+            $email = get_safe_value($con, $_POST["email"]);
+            if (mysqli_num_rows(mysqli_query($con, "select * from user where email = '$email'")) > 0) {
                 $emailErr = "Email Already Present.<br/>";
             }
-          }
+        }
     }
     #Phone Number Validation
     if (empty($_POST["phone"])) {
         $phoneErr = "Phone Number is required.<br/>";
     } else {
-        if(!preg_match('/^[0-9]{10}+$/', $_POST["phone"])){
+        if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"])) {
             $phoneErr = "Invalid Phone Number.<br/>";
-        }else{
-        $phone = get_safe_value($con,$_POST["phone"]);
+        } else {
+            $phone = get_safe_value($con, $_POST["phone"]);
         }
     }
     #Address Validaion
     if (empty($_POST["address"])) {
         $addressErr = "Address is required.<br/>";
     } else {
-        $address = get_safe_value($con,$_POST["address"]);
+        $address = get_safe_value($con, $_POST["address"]);
     }
     #password validation
     if (empty($_POST["password"])) {
@@ -53,27 +53,22 @@ if (isset($_POST['save'])) {
     } else {
         if (strlen($_POST["password"]) <= '8') {
             $passwordErr = "Your Password Must Contain At Least 8 Characters!.<br/>";
-        }
-        elseif(!preg_match("#[0-9]+#",$_POST["password"])) {
+        } elseif (!preg_match("#[0-9]+#", $_POST["password"])) {
             $passwordErr = "Your Password Must Contain At Least 1 Number!.<br/>";
-        }
-        elseif(!preg_match("#[A-Z]+#",$_POST["password"])) {
+        } elseif (!preg_match("#[A-Z]+#", $_POST["password"])) {
             $passwordErr = "Your Password Must Contain At Least 1 Capital Letter!.<br/>";
-        }
-        elseif(!preg_match("#[a-z]+#",$_POST["password"])) {
+        } elseif (!preg_match("#[a-z]+#", $_POST["password"])) {
             $passwordErr = "Your Password Must Contain At Least 1 Lowercase Letter!.<br/>";
-        }
-        elseif(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $_POST["password"])) {
+        } elseif (!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $_POST["password"])) {
     $passwordErr = "Your Password Must Contain At Least 1 Special Character!.<br />";
-    }
-    else{
+    } else {
     //$password = get_safe_value($con , $_POST['password']);
-    $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     }
     }
-    if($nameErr==''&& $emailErr==''&& $phoneErr==''&& $addressErr==''&& $passwordErr==''){
+    if ($nameErr == '' && $emailErr == '' && $phoneErr == '' && $addressErr == '' && $passwordErr == '') {
     $sql = "insert into `user` (`name`, `email`, `phone`, `address`, `password`,`status`) VALUES ('$name', '$email',
-    '$phone', '$address', '$password','1')";
+    '$phone', '$address', '$password','0')";
     //$res = mysqli_query($con, $sql);
     //echo $res;
     #$count = mysqli_fetch_assoc($res);
@@ -81,15 +76,16 @@ if (isset($_POST['save'])) {
     //$count = mysqli_num_rows($res);
     //echo $count;
     if (mysqli_query($con, $sql)) {
-    $msg=urldecode("You Can Login Now");
-    header('location:login.php?Message='.$msg);
+    $msg = urldecode("Account Created ! You Can Login Now");
+    header('location:login.php?Message=' . $msg);
     die();
     }
     }
     }
-    function get_safe_value($con , $str){
-    if($str!=''){
-    return(mysqli_real_escape_string($con, $str));
+    function get_safe_value($con, $str)
+    {
+    if ($str != '') {
+    return (mysqli_real_escape_string($con, $str));
     }
     }
     ?>
@@ -178,33 +174,31 @@ if (isset($_POST['save'])) {
     </head>
 
     <body>
-
-        <form method="POST">
+        <form method="POST" name="form1" onsubmit="return validation()">
+            <!-- <form method="POST" name="form1"> -->
             <div class="container">
                 <h1 style="text-align: center;">Register!</h1>
                 <h3 style="text-align: center;">Please fill in this form to create an account.</h3>
                 <hr>
                 <label><b>NAME</b>
-                    <p><?php echo $nameErr; ?></p>
+                    <p id="fname"><?php echo $nameErr; ?></p>
                 </label>
-                <input type="text" placeholder="Enter Your Name" name="name" id="email" value="<?php echo $name ?>"
-                    required>
+                <input type="text" placeholder="Enter Your Name" name="name" value="<?php echo $name ?>" required>
 
                 <label><b>EMAIL</b>
-                    <p><?php echo $emailErr; ?></p>
+                    <p id="femail"><?php echo $emailErr; ?></p>
                 </label>
-                <input type="text" placeholder="Enter Email as Username" name="email" id="email"
-                    value="<?php echo $email ?>" required>
+                <input type="text" placeholder="Enter Email as Username" name="email" value="<?php echo $email ?>"
+                    required>
 
                 <label><b>PHONE NUMBER</b>
-                    <p><?php echo $phoneErr; ?></P>
+                    <p id="fphone"><?php echo $phoneErr; ?></P>
                 </label>
-                <input type="text" placeholder="Enter Phone Number" name="phone" id="email" value="<?php echo $phone ?>"
-                    required>
+                <input type="text" placeholder="Enter Phone Number" name="phone" value="<?php echo $phone ?>" required>
 
 
                 <label><b>ADDRESS</b>
-                    <p><?php echo $addressErr; ?></P>
+                    <p id="faddress"><?php echo $addressErr; ?></P>
                 </label>
                 <textarea style="width: 100%;
                     padding: 15px;
@@ -216,11 +210,10 @@ if (isset($_POST['save'])) {
 
 
                 <label><b>PASSWORD</b>
-                    <p><?php echo $passwordErr;?>
+                    <p id="psw"><?php echo $passwordErr; ?>
                     <p>
                 </label>
-                <input type="password" placeholder="Enter Password" name="password" id="psw" required>
-
+                <input type="password" placeholder="Enter Password" name="password" required>
 
                 <hr>
                 <button type="submit" class="registerbtn" name="save">Register</button>
@@ -230,6 +223,50 @@ if (isset($_POST['save'])) {
                 <p>Already have an account? <a href="login.php">Sign in</a>.</p>
             </div>
         </form>
+        <script>
+        function clearerror() {
+            document.getElementById('fname').innerHTML = "";
+            document.getElementById('femail').innerHTML = "";
+            document.getElementById('fphone').innerHTML = "";
+            document.getElementById('faddress').innerHTML = "";
+            document.getElementById('psw').innerHTML = "";
+        }
+
+        function seterror(id, error) {
+            document.getElementById(id).innerHTML = error;
+        }
+
+        function validation() {
+            clearerror();
+            let validate = true;
+            let name = document.forms['form1']['name'].value;
+            if (name.length < 4) {
+                seterror('fname', 'Invalid name');
+                validate = false;
+            }
+            let email = document.forms['form1']['email'].value;
+            if (email.length < 10) {
+                seterror('femail', 'Invalid email');
+                validate = false;
+            }
+            let phone = document.forms['form1']['phone'].value;
+            if (phone.length != 10) {
+                seterror('fphone', 'Invalid phone number');
+                validate = false;
+            }
+            let address = document.forms['form1']['address'].value;
+            if (address.length < 10) {
+                seterror('faddress', 'Invalid Address');
+                validate = false;
+            }
+            let password = document.forms['form1']['password'].value;
+            if (password.length < 8) {
+                seterror('psw', 'Required minimum 8 characters');
+                validate = false;
+            }
+            return validate;
+        }
+        </script>
     </body>
 
     </html>

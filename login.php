@@ -3,7 +3,7 @@ require('connection.inc.php');
 $msg = " ";
 $username = "";
 $password = "";
-if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!=''){
+if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
     header('location:blog.php');
 }
 if (isset($_POST['submit'])) {
@@ -12,29 +12,32 @@ if (isset($_POST['submit'])) {
     $sql = "select * from `user` where email = '$username'";
     $res = mysqli_query($con, $sql);
     $count = mysqli_num_rows($res);
-    if($count > 0){
+    if ($count > 0) {
         $cnt = 0;
-        while($row = mysqli_fetch_assoc($res)){
-            if(password_verify($password , $row['password'])){
+        while ($row = mysqli_fetch_assoc($res)) {
+            if (password_verify($password, $row['password'])) {
                 $cnt = 1;
                 $_SESSION['USER_LOGIN'] = 'yes';
                 $_SESSION['USER_USERNAME'] = $username;
+                $sql = "update `user` set status = '1' where email = '$username'";
+                mysqli_query($con, $sql);
                 header('location:blog.php');
                 die();
             }
-        }if($cnt===0){
+        }
+        if ($cnt === 0) {
             $msg = "Password is Incorrect";
         }
     } else {
         $msg = "Please Enter Correct login details <br> If you are new than Register Yourself First!";
     }
-}
-elseif(isset($_POST['back'])){
+} elseif (isset($_POST['back'])) {
     header('location:index.php');
 }
-function get_safe_value($con , $str){
-    if($str!=''){
-        return(mysqli_real_escape_string($con, $str));
+function get_safe_value($con, $str)
+{
+    if ($str != '') {
+        return (mysqli_real_escape_string($con, $str));
     }
 }
 ?>
@@ -113,9 +116,9 @@ function get_safe_value($con , $str){
 </head>
 
 <body>
-    <div style="text-align: center;"><?php if(isset($_GET['Message'])){
-        echo $_GET['Message'];
-    }?></div>
+    <div style="text-align: center;color:#04AA6D"><?php if (isset($_GET['Message'])) {
+                                                        echo $_GET['Message'];
+                                                    } ?></div>
     <h2 style="text-align: center;">Welcome Back!</h2>
     <form method="post">
         <div class="container">
@@ -123,10 +126,11 @@ function get_safe_value($con , $str){
             <input type="text" placeholder="Enter Username" name="name" value="<?php echo $username ?>" required>
 
             <label><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" value="<?php echo $password?>" required>
+            <input type="password" placeholder="Enter Password" name="password" value="<?php echo $password ?>"
+                required>
 
             <button type="submit" name="submit">Login</button>
-            <div style="text-align: center; color:#f44336"><?php echo $msg ;?></div>
+            <div style="text-align: center; color:#f44336"><?php echo $msg; ?></div>
         </div>
 
         <div class="container" style="background-color:#f1f1f1">
