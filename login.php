@@ -19,8 +19,15 @@ if (isset($_POST['submit'])) {
                 $cnt = 1;
                 $_SESSION['USER_LOGIN'] = 'yes';
                 $_SESSION['USER_USERNAME'] = $username;
-                $sql = "update `user` set status = '1' where email = '$username'";
-                mysqli_query($con, $sql);
+                if (isset($_POST['remember'])) {
+                    setcookie("username", $username, time() + 1 * 60 * 60);
+                } else {
+                    if (isset($_COOKIE['username'])) {
+                        setcookie("username", "");
+                    }
+                }
+                // $sql = "update `user` set status = '1' where email = '$username'";
+                // mysqli_query($con, $sql);
                 header('location:blog.php');
                 die();
             }
@@ -50,10 +57,10 @@ function get_safe_value($con, $str)
     <style>
     body {
         font-family: Arial, Helvetica, sans-serif;
-
     }
 
     form {
+        background: #f1f1f1;
         border: 3px solid #f1f1f1;
         width: 50%;
         margin-left: auto;
@@ -97,9 +104,10 @@ function get_safe_value($con, $str)
     }
 
     span.psw {
-        float: right;
+        padding-left: 100px;
         padding-top: 16px;
     }
+
 
     /* Change styles for span and cancel button on extra small screens */
     @media screen and (max-width: 300px) {
@@ -115,18 +123,20 @@ function get_safe_value($con, $str)
     </style>
 </head>
 
-<body>
-    <div style="text-align: center;color:#04AA6D"><?php if (isset($_GET['Message'])) {
-                                                        echo $_GET['Message'];
-                                                    } ?></div>
-    <h2 style="text-align: center;">Welcome Back!</h2>
+<body style="background-image: url('image/blog.jpg');">
     <form method="post">
+        <div style="text-align: center;color:#04AA6D"><?php if (isset($_GET['Message'])) {
+                                                            echo $_GET['Message'];
+                                                        } ?></div>
+        <h2 style="text-align: center;">Welcome Back!</h2>
         <div class="container">
             <label><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="name" value="<?php echo $username ?>" required>
+            <input type="text" placeholder="Enter Username" name="name" value="<?php if (isset($_COOKIE['username'])) {
+                                                                                    echo $_COOKIE['username'];
+                                                                                } ?>" required>
 
             <label><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" value="<?php echo $password ?>"
+            <input type="password" placeholder="Enter Password" name="password" value="<?php echo $password; ?>"
                 required>
 
             <button type="submit" name="submit">Login</button>
@@ -134,12 +144,14 @@ function get_safe_value($con, $str)
         </div>
 
         <div class="container" style="background-color:#f1f1f1">
-            <button type="submit" class="cancelbtn" name="back">Cancel</button>
-            <span style="padding-left: 23%;">Register Yourself <a href="registration.php">sign up</a></span>
+            <!-- <button type="submit" class="cancelbtn" name="back">Cancel</button> -->
+            <input type="checkbox" name="remember" <?php if (isset($_COOKIE['username'])) { ?> checked <?php } ?> />
+            <label>Remember Me</label>
+            <span style="padding-left: 15%;">Register Yourself ? <a href="registration.php"
+                    style="text-decoration: none;">sign up</a></span>
             <span class="psw"><a href="index.php">Back?</a></span>
         </div>
     </form>
-
 </body>
 
 </html>

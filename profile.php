@@ -63,6 +63,7 @@ function get_safe_value($con, $str)
         display: inline-block;
         border: 1px solid #ccc;
         box-sizing: border-box;
+        background: #f1f1f2;
     }
 
     button {
@@ -108,13 +109,13 @@ function get_safe_value($con, $str)
     </style>
 </head>
 
-<body>
-    <h2 style="text-align: center;">Personal Details!</h2>
-    <h3 style="text-align: center;color:#04AA6D">
-        <?php if (isset($_GET['Message'])) {
-            echo $_GET['Message'];
-        } ?></h3>
-    <form method="post">
+<body style="background-image: url('image/book.jpg');">
+    <form method="post" style="background:#f1f1f1">
+        <h2 style="text-align: center;color:blue">Personal Details!</h2>
+        <h3 style="text-align: center;color:#04AA6D">
+            <?php if (isset($_GET['Message'])) {
+                echo $_GET['Message'];
+            } ?></h3>
         <div class="container">
             <label><b>Name</b></label>
             <input type="text" name="name" value="<?php echo $res['name'] ?>" required>
@@ -126,13 +127,27 @@ function get_safe_value($con, $str)
             <input type="text" name="phone" value="<?php echo $res['phone'] ?>" required>
 
             <label><b>Address</b></label>
-            <textarea name="address" rows="3" style="width:100% ;" required><?php echo $res['address'] ?></textarea>
+            <textarea name="address" rows="3"
+                style="width:95%;font-family:Arial, Helvetica, sans-serif;padding:15px;font-size:15px;background:#f1f1f2;margin:10px 0 22px 0"
+                required><?php echo $res['address'] ?></textarea>
 
             <button type="submit" name="save" style="background-color: #04AA6D;">Save</button>
             <button type="submit" name="cancel" style="background-color:#f44336">Cancel</button>
         </div>
     </form>
+    <script>
+    ifvisible.on("blur", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '0' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
 
+    ifvisible.on("focus", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '1' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
+    </script>
 </body>
 
 </html>

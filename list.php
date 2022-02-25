@@ -92,7 +92,7 @@ function get_safe_value($con, $str)
                             <!-- <td><?php echo $row['blog_name'] ?></td> -->
                             <td>
                                 <?php
-                                    if ($row['status'] == 1) {
+                                    if (($row['status'] == 1)) {
                                         // echo "<span><a href='?type=status&operation=deactive&id=".$row['id']."'>Active</a></span>&nbsp;";
                                         echo "<p style='color:green;'>Active</p>";
                                     } else {
@@ -106,6 +106,19 @@ function get_safe_value($con, $str)
                 </table>
             </div>
         </form>
+        <script>
+        ifvisible.on("blur", function() {
+            <?php $username = $_SESSION['USER_USERNAME'];
+                $sql = "update `user` set status = '0' where email = '$username'";
+                mysqli_query($con, $sql); ?>
+        });
+
+        ifvisible.on("focus", function() {
+            <?php $username = $_SESSION['USER_USERNAME'];
+                $sql = "update `user` set status = '1' where email = '$username'";
+                mysqli_query($con, $sql); ?>
+        });
+        </script>
     </body>
 
     </html>

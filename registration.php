@@ -39,6 +39,9 @@ if (isset($_POST['save'])) {
             $phoneErr = "Invalid Phone Number.<br/>";
         } else {
             $phone = get_safe_value($con, $_POST["phone"]);
+            if (mysqli_num_rows(mysqli_query($con, "select * from user where phone = '$phone'")) > 0) {
+                $phoneErr = "Phone Number Already Present.<br/>";
+            }
         }
     }
     #Address Validaion
@@ -102,16 +105,25 @@ if (isset($_POST['save'])) {
         <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: black;
+
         }
 
         * {
             box-sizing: border-box;
         }
 
+        form {
+            background: #f1f1f1;
+            border: 3px solid #f1f1f1;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 80%;
+        }
+
         /* Add padding to containers */
         .container {
-            padding: 16px;
+            padding: 18px;
             background-color: white;
         }
 
@@ -173,7 +185,7 @@ if (isset($_POST['save'])) {
         </style>
     </head>
 
-    <body>
+    <body style="background-image: url('image/registration.jpg');">>
         <form method="POST" name="form1" onsubmit="return validation()">
             <!-- <form method="POST" name="form1"> -->
             <div class="container">

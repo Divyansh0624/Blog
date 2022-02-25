@@ -41,8 +41,8 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
     </style>
 </head>
 
-<body>
-    <form method="POST">
+<body style="background-image: url('image/myblog2.png');">
+    <form method=" POST">
         <div class="container">
             <h1>Your Blogs!</h1>
             <a href="blog.php" style="float:right;">BACK</a>
@@ -54,7 +54,7 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
                 <b><?php echo $row['blog_name']; ?><br></b>
             </h2>
             <p>
-                <?php echo $row['blog'] ?>
+                <b><?php echo $row['blog'] ?></b>
             </p>
             <br>
             <div style="text-align: right;">
@@ -64,6 +64,19 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
             <hr>
         </div>
     </form>
+    <script>
+    ifvisible.on("blur", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '0' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
+
+    ifvisible.on("focus", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '1' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
+    </script>
 </body>
 
 </html>

@@ -65,10 +65,11 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
 }
 </style>
 
-<body>
+<body style="background-image: url('image/blog2.jpg')">
     <section>
-        <div style="background-color:grey ; width:100%;opacity:0.9">
-            <h1 style="text-align: center;color:darkblue;font-size:40px"><b>BLOGS</b></h1>
+        <div style=" background-color:grey ; width:100%;opacity:0.9">
+            <h1 style="background-image: url('image/download.jpg');height:80px">
+            </h1>
             <div class="dropdown">
                 <button class="dropbtn">MoreOptions</button>
                 <div class="dropdown-content">
@@ -92,7 +93,7 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
                         <b> <?php echo $row['blog_name'] ?><br> </b>
                     </h2>
                     <p style="text-align: left;">
-                        <?php echo $row['blog'] ?><br>
+                        <b><?php echo $row['blog'] ?></b><br>
                     </p>
                 </div>
                 <div style="text-align: right;">
@@ -103,6 +104,19 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
             </form>
         </div>
     </section>
+    <script>
+    ifvisible.on("blur", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '0' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
+
+    ifvisible.on("focus", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '1' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
+    </script>
 </body>
 
 </html>

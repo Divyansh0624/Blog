@@ -33,7 +33,7 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
     <title>Comments</title>
 </head>
 
-<body style="background:lightsteelblue">
+<body style="background-image: url('image/comment.jpg');">
     <form method="POST" action="">
         <a href="blog.php" style="float:right;;text-decoration:none;width:7%"><span
                 style="border: 1px solid black;background:darkgrey">BACK</span></a>
@@ -49,9 +49,9 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
                 style="text-align:center;width: 60%; height:40px" required>
             <button type="submit" name="save"
                 style="text-align:center;height:42px ;width:5%;background:chartreuse;cursor: pointer;">Add</button>
-            <h3>Comment Section</h3>
+            <h2 style="color: darkred;">Comment Section</h2>
         </div>
-        <table style="margin: auto;background:cadetblue">
+        <table style="margin: auto;background:none">
             <tbody>
                 <?php
                 $lastcol = 0;
@@ -69,7 +69,7 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
                 ?>
                 <tr>
                     <td><span
-                            style="border: 0.5px solid black;display: inline-block;width: 300px;height: 30px;text-align: center;background:gainsboro;">
+                            style="border: 0.5px solid black;display: inline-block;width: 300px;height: 30px;text-align: center;background:white;">
                             <?php echo $rows['comment']; ?></span>
                     </td>
                     <td>
@@ -86,6 +86,19 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
             </tbody>
         </table>
     </form>
+    <script>
+    ifvisible.on("blur", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '0' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
+
+    ifvisible.on("focus", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '1' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
+    </script>
 </body>
 
 </html>

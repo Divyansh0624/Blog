@@ -1,29 +1,30 @@
-<?php 
+<?php
 require('connection.inc.php');
-if(isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN']!=''){
-    if(isset($_POST['save'])){
+if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
+    if (isset($_POST['save'])) {
         $data = $_SESSION['USER_USERNAME'];
         $sql = "select id from `user` where email = '$data '";
-        $res = mysqli_query($con,$sql);
-        if(mysqli_num_rows($res) > 0){
+        $res = mysqli_query($con, $sql);
+        if (mysqli_num_rows($res) > 0) {
             $set = mysqli_fetch_assoc($res);
             $id = $set['id'];
             $name = get_safe_value($con, $_POST['name']);
-            $blog= get_safe_value($con, $_POST['blog']);
+            $blog = get_safe_value($con, $_POST['blog']);
             $sql = "insert into `blog` (`user_id`, `blog_name`, `blog`) VALUES ('$id', '$name', '$blog') ";
-            mysqli_query($con,$sql);
+            mysqli_query($con, $sql);
             header('location:blog.php');
-        }else{
+        } else {
             header('location:login.php');
         }
     }
-}else{
+} else {
     header('location:login.php');
     die();
 }
-function get_safe_value($con , $str){
-    if($str!=''){
-        return(mysqli_real_escape_string($con, $str));
+function get_safe_value($con, $str)
+{
+    if ($str != '') {
+        return (mysqli_real_escape_string($con, $str));
     }
 }
 ?>
@@ -110,7 +111,19 @@ function get_safe_value($con , $str){
             <button type="submit" class="savebtn" name="save">SAVE</button>
         </div>
     </form>
+    <script>
+    ifvisible.on("blur", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '0' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
 
+    ifvisible.on("focus", function() {
+        <?php $username = $_SESSION['USER_USERNAME'];
+            $sql = "update `user` set status = '1' where email = '$username'";
+            mysqli_query($con, $sql); ?>
+    });
+    </script>
 </body>
 
 </html>

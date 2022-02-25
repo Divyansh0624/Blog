@@ -2,8 +2,8 @@
 require('connection.inc.php');
 $username = $_SESSION['USER_USERNAME'];
 $sql = "update `user` set status = '0' where email = '$username'";
-$data = "";
 mysqli_query($con, $sql);
+$data = "";
 if (isset($_GET['Message'])) {
     $data = $_GET['Message'];
 }
