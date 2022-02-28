@@ -26,8 +26,8 @@ if (isset($_POST['submit'])) {
                         setcookie("username", "");
                     }
                 }
-                // $sql = "update `user` set status = '1' where email = '$username'";
-                // mysqli_query($con, $sql);
+                $sql = "update `user` set status = '1' where email = '$username'";
+                mysqli_query($con, $sql);
                 header('location:blog.php');
                 die();
             }

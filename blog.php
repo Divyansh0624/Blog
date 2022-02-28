@@ -65,7 +65,7 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
 }
 </style>
 
-<body style="background-image: url('image/blog2.jpg')">
+<body style="background-image: url('image/blogs.jpg');">
     <section>
         <div style=" background-color:grey ; width:100%;opacity:0.9">
             <h1 style="background-image: url('image/download.jpg');height:80px">

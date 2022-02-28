@@ -1,9 +1,8 @@
 <?php
 require('connection.inc.php');
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
     header('location:login.php');
-}
-elseif(isset($_POST['register'])){
+} elseif (isset($_POST['register'])) {
     header('location:registration.php');
 }
 ?>
