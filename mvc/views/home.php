@@ -30,7 +30,7 @@ table {
 </style>
 
 <body>
-    <form method="POST" action="index.php">
+    <form method="POST" action="">
         <h1 style="text-align: center;background-color:skyblue"><b>Welcome to our Blog family!</b></h1>
         <table class="table">
             <tr>

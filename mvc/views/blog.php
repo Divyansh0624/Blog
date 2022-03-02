@@ -62,11 +62,11 @@
             <div class="dropdown">
                 <button class="dropbtn">MoreOptions</button>
                 <div class="dropdown-content">
-                    <a href='create.php' style="color:black;text-decoration: none;">CreateNew</a>&nbsp;
-                    <a href='myblog.php' style="color:green;text-decoration: none;">MyBlogs</a>&nbsp;
-                    <a href='list.php' style="color:blue;text-decoration: none;">UserList</a>&nbsp;
-                    <a href='profile.php' style="color:darkorchid;text-decoration: none;">Profile</a>&nbsp;
-                    <a href='logout.php' style=" color:red;text-decoration: none;">LogOut</a>
+                    <a href='index.php?action=CreateNew' style="color:black;text-decoration: none;">CreateNew</a>&nbsp;
+                    <a href='index.php?action=MyBlog' style="color:green;text-decoration: none;">MyBlogs</a>&nbsp;
+                    <a href='index.php?action=UserList' style="color:blue;text-decoration: none;">UserList</a>&nbsp;
+                    <a href='index.php?action=Profile' style="color:darkorchid;text-decoration: none;">Profile</a>&nbsp;
+                    <a href='index.php?action=logout' style=" color:red;text-decoration: none;">LogOut</a>
                 </div>
             </div>
         </div>

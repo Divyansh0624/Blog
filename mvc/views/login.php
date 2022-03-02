@@ -76,6 +76,9 @@
 <body>
     <form method="post" action="index.php?action=blog-all">
         <h2 style="text-align: center;">Welcome Back!</h2>
+        <div style="text-align: center;color:#f44336"><?php if (isset($_GET['Message'])) {
+                                                            echo $_GET['Message'];
+                                                        } ?></div>
         <div class="container">
             <label><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="name"

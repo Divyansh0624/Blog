@@ -1,13 +1,14 @@
 <?php
+session_start();
 $action = $_GET['action'] ?? $_POST['action'] ?? 'home';
-if ($action == 'user') {
-    include_once "models/user.php";
-    $users = new user();
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $result = $users->getuserbyid($username, $password);
-    if ($result) {
-        include_once 'views/blog.php';
+if ($action == 'UserList') {
+    if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
+        include_once 'models/user.php';
+        $user = new user();
+        $rows = $user->getalluser();
+        require_once 'views/list.php';
+    } else {
+        require_once 'views/login.php';
     }
 } elseif ($action == 'blog-all') {
     if (isset($_POST['submit'])) {
@@ -23,6 +24,9 @@ if ($action == 'user') {
                     $cnt = 1;
                     $_SESSION['USER_LOGIN'] = 'yes';
                     $_SESSION['USER_USERNAME'] = $username;
+                    // include_once 'models/user.php';
+                    // $user = new user();
+                    // $user->updateuserstatus(true, $username);
                     if (isset($_POST['remember'])) {
                         setcookie("username", $username, time() + 1 * 60 * 60);
                     } else {
@@ -30,18 +34,30 @@ if ($action == 'user') {
                             setcookie("username", "");
                         }
                     }
-                    include_once "models/blog.php";
-                    $blog = new blog();
-                    $blog_list = $blog->getallblog();
-                    require_once 'views/blog.php';
                 }
             }
             if ($cnt === 0) {
                 $msg = "Password is Incorrect";
+                header('location:index.php?action=login&Message=' . $msg);
+            } else {
+                include_once "models/blog.php";
+                $blog = new blog();
+                $blog_list = $blog->getallblog();
+                if (!empty($blog_list)) {
+                    require_once 'views/blog.php';
+                }
             }
         } else {
             $msg = "Please Enter Correct login details <br> If you are new than Register Yourself First!";
+            header('location:index.php?action=login&Message=' . $msg);
         }
+    } elseif (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
+        include_once "models/blog.php";
+        $blog = new blog();
+        $blog_list = $blog->getallblog();
+        require_once 'views/blog.php';
+    } else {
+        require_once 'views/login.php';
     }
 } elseif ($action == 'registration') {
     require_once 'views/registration.php';
@@ -119,16 +135,137 @@ if ($action == 'user') {
     }
 } elseif ($action == 'login') {
     require_once 'views/login.php';
-} elseif ($action == 'add-user') {
-    if (isset($_POST['save'])) {
+} elseif ($action == 'CreateNew') {
+    if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
+        $msg = "";
+        if (isset($_POST['saveblog'])) {
+            $data = $_SESSION['USER_USERNAME'];
+            include_once 'models/user.php';
+            $user = new user();
+            $current_user = $user->getuserbyemail($data);
+            $user_id = $current_user[0]['id'];
+            $name = $_POST['name'];
+            $blog = $_POST['blog'];
+            include_once 'models/blog.php';
+            $new_blog = new blog();
+            $result = $new_blog->addblog($user_id, $name, $blog);
+            if (!empty($result)) {
+                $msg = "Blog Added Successfully";
+                require_once 'views/create.php';
+            } else {
+                $msg = "You have not created any blog.";
+                require_once 'views/create.php';
+            }
+        } else {
+            require_once 'views/create.php';
+        }
+    } else {
+        require_once 'views/login.php';
+    }
+} elseif ($action == 'MyBlog') {
+    if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
+        $msg = "";
+        $data = $_SESSION['USER_USERNAME'];
+        include_once 'models/user.php';
+        $user = new user();
+        $current_user = $user->getuserbyemail($data);
+        $user_id = $current_user[0]['id'];
+        include_once 'models/blog.php';
+        $new_blog = new blog();
+        $result = $new_blog->getuserblogs($user_id);
+        if (!empty($result)) {
+            require_once 'views/myblog.php';
+        } else {
+            $msg = "Blog Not Inserted";
+            require_once 'views/myblog.php';
+        }
+    } else {
+        require_once 'views/login.php';
+    }
+} elseif ($action == 'logout') {
+    session_unset();
+    session_destroy();
+    require_once 'views/login.php';
+} elseif ($action == 'Profile') {
+    if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
+        $data = $_SESSION['USER_USERNAME'];
+        include_once 'models/user.php';
+        $user = new user();
+        $current_user = $user->getuserbyemail($data);
+        $oldEmail = $current_user[0]['email'];
+        if (isset($_POST['save'])) {
+            $id = $current_user[0]['id'];
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $phone = $_POST['phone'];
+            $address =  $_POST['address'];
+            include_once 'models/user.php';
+            $user = new user();
+            $current_user = $user->updateuser($name,  $phone, $address, $email,);
+            if ($email != $oldEmail) {
+                $msg = "Login Again With New Email";
+                session_unset();
+                session_destroy();
+                require_once 'views/login.php';
+            } else {
+                $msg = urldecode("Profile Updated Successfully");
+                header('location:index.php?action=Profile&Message=' . $msg);
+            }
+        } elseif (isset($_POST['cancel'])) {
+            header('location:index.php?action=blog-all');
+        } else {
+            require_once 'views/profile.php';
+        }
+    } else {
+        require_once 'views/login.php';
+    }
+} elseif ($action == 'edit') {
+    if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
+        if (isset($_GET["body"])) {
+            if (isset($_POST['save'])) {
+                $blog_id = $_GET["body"];
+                $name = $_POST['name'];
+                $blog_des = $_POST['blog'];
+                include_once 'models/blog.php';
+                $blog = new blog();
+                $set = $blog->updateblog($name, $blog_des, $blog_id);
+                header('location:index.php?action=edit&body=' . $blog_id);
+            } elseif (isset($_POST['delete'])) {
+                $blog_id = $_GET["body"];
+                include_once 'models/blog.php';
+                $blog = new blog();
+                $blog->deleteblog($blog_id);
+                include_once 'models/comment.php';
+                // $blog = new comment();
+                // $blog->deletecomment($blog_id);
+                // require_once 'views/myblog.php';
+                header('location:index.php?action=MyBlog');
+            } else {
+                $blog_id = $_GET["body"];
+                include_once 'models/blog.php';
+                $blog = new blog();
+                $set = $blog->getblogbyid($blog_id);
+                if (!empty($set)) {
+                    $blog_title = $set[0]['blog_name'];
+                    $blog = $set[0]['blog'];
+                    require_once 'views/edit.php';
+                } else {
+                    require_once 'views/myblog.php';
+                }
+            }
+        } else {
+            require_once 'views/myblog.php';
+        }
+    } else {
+        require_once 'views/login.php';
     }
 } else {
     if (isset($_POST['login'])) {
-        require_once 'views/login.php';
+        header('location:index.php?action=login');
         if (isset($_POST['submit'])) {
         }
     } elseif (isset($_POST['register'])) {
-        require_once 'views/registration.php';
+        header('location:index.php?action=registration');
     } else {
         require_once 'views/home.php';
     }

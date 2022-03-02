@@ -24,7 +24,7 @@ class user
     }
     function deleteuser($username)
     {
-        $sql = "Update `user` set status = ? where email = ?";
+        $sql = "Update `user` set status = ? where email = ? ";
         $param_type = "is";
         $param_array = array(
             0,
@@ -34,7 +34,7 @@ class user
     }
     function updateuser($name, $phone, $address, $username)
     {
-        $sql = "Update `user` set name = ?, phone = ?, address = ?, where email = ?";
+        $sql = "Update `user` set name = ?, phone = ?, address = ? where email = ? ";
         $param_type = "ssss";
         $param_array = array(
             $name,
@@ -44,9 +44,22 @@ class user
         );
         $this->db_handle->update($sql, $param_type, $param_array);
     }
+    function updateuserstatus($status, $username)
+    {
+        if ($status) {
+            $sql = "Update `user` set status = true where email = ? ";
+        } else {
+            $sql = "Update `user` set status = false where email = ? ";
+        }
+        $param_type = "s";
+        $param_array = array(
+            $username
+        );
+        $this->db_handle->update($sql, $param_type, $param_array);
+    }
     function getuserbyid($username)
     {
-        $sql = "select * from `user` where id = ?";
+        $sql = "select * from `user` where id = ? ";
         $param_type = 'i';
         $param_array = array(
             $username
@@ -56,7 +69,7 @@ class user
     }
     function getuserbyemail($username)
     {
-        $sql = "select * from `user` where email = ?";
+        $sql = "select * from `user` where email = ? ";
         $param_type = "s";
         $param_array = array(
             $username
