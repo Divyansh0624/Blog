@@ -92,26 +92,27 @@
         <!-- <form method="POST" name="form1"> -->
         <div class="container">
             <h1 style="text-align: center;">Register!</h1>
-            <h3 style="text-align: center;">Please fill in this form to create an account.</h3>
+            <h3 style="text-align: center;">Please fill in this form to create an account.
+            </h3>
             <hr>
             <label><b>NAME</b>
-                <p id="fname"></p>
+                <p id="fname"><?php if (isset($nameErr)) echo $nameErr; ?></p>
             </label>
-            <input type="text" placeholder="Enter Your Name" name="name" value="" required>
+            <input type="text" placeholder="Enter Your Name" name="name" value="" id="uname" required>
 
             <label><b>EMAIL</b>
-                <p id="femail"></p>
+                <p id="femail"><?php if (isset($emailErr)) echo $emailErr; ?></p>
             </label>
             <input type="text" placeholder="Enter Email as Username" name="email" value="" required>
 
             <label><b>PHONE NUMBER</b>
-                <p id="fphone"></P>
+                <p id="fphone"><?php if (isset($phoneErr)) echo $phoneErr; ?></P>
             </label>
             <input type="text" placeholder="Enter Phone Number" name="phone" value="" required>
 
 
             <label><b>ADDRESS</b>
-                <p id="faddress"></P>
+                <p id="faddress"><?php if (isset($addressErr)) echo $addressErr; ?></P>
             </label>
             <textarea style="width: 100%;
                     padding: 15px;
@@ -123,7 +124,7 @@
 
 
             <label><b>PASSWORD</b>
-                <p id="psw">
+                <p id="psw"><?php if (isset($passwordErr)) echo $passwordErr; ?>
                 <p>
             </label>
             <input type="password" placeholder="Enter Password" name="password" required>

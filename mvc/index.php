@@ -62,76 +62,103 @@ if ($action == 'UserList') {
 } elseif ($action == 'registration') {
     require_once 'views/registration.php';
 } elseif ($action == 'add-user') {
-    $msg = "";
-    $name = "";
-    $email = "";
-    $phone = "";
-    $address = "";
-    $password = "";
-    $nameErr = $emailErr = $phoneErr = $addressErr = $passwordErr = "";
-    if (isset($_POST['register'])) {
-        #Name Validation
-        if (empty($_POST["name"])) {
-            $nameErr = "Name is required.<br/>";
-        } else {
-            if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"])) {
-                $nameErr = "Only letters and white space allowed.<br/>";
-            } else {
-                $name =  $_POST["name"];
-            }
+    // $msg = "";
+    // $name = "";
+    // $email = "";
+    // $phone = "";
+    // $address = "";
+    // $password = "";
+    // $nameErr = $emailErr = $phoneErr = $addressErr = $passwordErr = "";
+    // if (isset($_POST['register'])) {
+    //     #Name Validation
+    //     if (empty($_POST["name"])) {
+    //         $nameErr = "Name is required.<br/>";
+    //     } else {
+    //         if (!preg_match("/^[a-zA-Z-' ]*$/", $_POST["name"])) {
+    //             $nameErr = "Only letters and white space allowed.<br/>";
+    //         } else {
+    //             $name =  $_POST["name"];
+    //         }
+    //     }
+    //     #Email Validation
+    //     if (empty($_POST["email"])) {
+    //         $emailErr = "Email is required.<br/>";
+    //     } else {
+    //         if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+    //             $emailErr = "Invalid email format.<br/>";
+    //         } else {
+    //             $email = $_POST["email"];
+    //         }
+    //     }
+    //     #Phone Number Validation
+    //     if (empty($_POST["phone"])) {
+    //         $phoneErr = "Phone Number is required.<br/>";
+    //     } else {
+    //         if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"])) {
+    //             $phoneErr = "Invalid Phone Number.<br/>";
+    //         } else {
+    //             $phone =  $_POST["phone"];
+    //         }
+    //     }
+    //     #Address Validaion
+    //     if (empty($_POST["address"])) {
+    //         $addressErr = "Address is required.<br/>";
+    //     } else {
+    //         $address = $_POST["address"];
+    //     }
+    //     #password validation
+    //     if (empty($_POST["password"])) {
+    //         $phoneErr = "Password is required.<br/>";
+    //     } else {
+    //         if (strlen($_POST["password"]) <= '8') {
+    //             $passwordErr = "Your Password Must Contain At Least 8 Characters!.<br/>";
+    //         } elseif (!preg_match("#[0-9]+#", $_POST["password"])) {
+    //             $passwordErr = "Your Password Must Contain At Least 1 Number!.<br/>";
+    //         } elseif (!preg_match("#[A-Z]+#", $_POST["password"])) {
+    //             $passwordErr = "Your Password Must Contain At Least 1 Capital Letter!.<br/>";
+    //         } elseif (!preg_match("#[a-z]+#", $_POST["password"])) {
+    //             $passwordErr = "Your Password Must Contain At Least 1 Lowercase Letter!.<br/>";
+    //         } else {
+    //             //$password = get_safe_value($con , $_POST['password']);
+    //             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    //         }
+    //     }
+
+    //     if ($nameErr == '' && $emailErr == '' && $phoneErr == '' && $addressErr == '' && $passwordErr == '') {
+    //         include_once 'models/user.php';
+    //         $user = new user();
+    //         $id = $user->adduser($name, $email, $phone, $address, $password);
+    //         if (!empty($id)) {
+    //             require_once 'views/login.php';
+    //         }
+    //     } else {
+    //         require_once 'views/registration.php';
+    //     }
+    // }
+    require_once 'controllers/usercontroller.php';
+    $usertrue = add_user();
+    $message = "User Added";
+    if ($usertrue === $message) {
+        $msg = urlencode('Account Created LogIn Now');
+        header('location:index.php?action=login&Message=' . $msg);
+    } else {
+        if (!empty($usertrue[0])) {
+            $nameErr = $usertrue[0];
         }
-        #Email Validation
-        if (empty($_POST["email"])) {
-            $emailErr = "Email is required.<br/>";
-        } else {
-            if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-                $emailErr = "Invalid email format.<br/>";
-            } else {
-                $email = $_POST["email"];
-            }
+        if (!empty($usertrue[1])) {
+            $emailErr = $usertrue[1];
         }
-        #Phone Number Validation
-        if (empty($_POST["phone"])) {
-            $phoneErr = "Phone Number is required.<br/>";
-        } else {
-            if (!preg_match('/^[0-9]{10}+$/', $_POST["phone"])) {
-                $phoneErr = "Invalid Phone Number.<br/>";
-            } else {
-                $phone =  $_POST["phone"];
-            }
+        if (!empty($usertrue[2])) {
+            $phoneErr = $usertrue[2];
         }
-        #Address Validaion
-        if (empty($_POST["address"])) {
-            $addressErr = "Address is required.<br/>";
-        } else {
-            $address = $_POST["address"];
+        if (!empty($usertrue[3])) {
+            $addressErr = $usertrue[3];
         }
-        #password validation
-        if (empty($_POST["password"])) {
-            $phoneErr = "Password is required.<br/>";
-        } else {
-            if (strlen($_POST["password"]) <= '8') {
-                $passwordErr = "Your Password Must Contain At Least 8 Characters!.<br/>";
-            } elseif (!preg_match("#[0-9]+#", $_POST["password"])) {
-                $passwordErr = "Your Password Must Contain At Least 1 Number!.<br/>";
-            } elseif (!preg_match("#[A-Z]+#", $_POST["password"])) {
-                $passwordErr = "Your Password Must Contain At Least 1 Capital Letter!.<br/>";
-            } elseif (!preg_match("#[a-z]+#", $_POST["password"])) {
-                $passwordErr = "Your Password Must Contain At Least 1 Lowercase Letter!.<br/>";
-            } else {
-                //$password = get_safe_value($con , $_POST['password']);
-                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            }
+        if (!empty($usertrue[4])) {
+            $passwordErr = $usertrue[4];
         }
 
-        if ($nameErr == '' && $emailErr == '' && $phoneErr == '' && $addressErr == '' && $passwordErr == '') {
-            include_once 'models/user.php';
-            $user = new user();
-            $id = $user->adduser($name, $email, $phone, $address, $password);
-            if (!empty($id)) {
-                require_once 'views/login.php';
-            }
-        }
+        require_once 'views/registration.php';
     }
 } elseif ($action == 'login') {
     require_once 'views/login.php';
@@ -250,6 +277,7 @@ if ($action == 'UserList') {
                     $blog = $set[0]['blog'];
                     require_once 'views/edit.php';
                 } else {
+
                     require_once 'views/myblog.php';
                 }
             }

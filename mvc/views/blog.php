@@ -83,11 +83,12 @@
                     <p style="text-align: left;">
                         <b><?php echo $row['blog'] ?></b><br>
                     </p>
+                    <br><br>
                 </div>
-                <div style="text-align: right;">
+                <!-- <div style="text-align: right;">
                     <a href="comments.php?id=<?php echo $row['id'] ?>" style="text-decoration: none;color:black">
                         <span style="padding:2px;border: 2px solid black;background:lightgrey">COMMENTS</span></a><br>
-                </div>
+                </div> -->
                 <?php } ?>
             </form>
         </div>

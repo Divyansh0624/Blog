@@ -15,6 +15,14 @@ class datacontroller
         $conn = mysqli_connect($this->host, $this->name, $this->password, $this->database);
         return $conn;
     }
+    function BindQueryParams($sql, $param_type, $param_array)
+    {
+        $param_array_reference[] = &$param_type;
+        for ($i = 0; $i < count($param_array); $i++) {
+            $param_array_reference[] = &$param_array[$i];
+        }
+        call_user_func_array(array($sql, 'bind_param'), $param_array_reference);
+    }
     function RunBaseQuery($sql)
     {
         $fetchresult = array();
@@ -41,14 +49,7 @@ class datacontroller
         }
         return $fetchresult;
     }
-    function BindQueryParams($sql, $param_type, $param_array)
-    {
-        $param_array_reference[] = &$param_type;
-        for ($i = 0; $i < count($param_array); $i++) {
-            $param_array_reference[] = &$param_array[$i];
-        }
-        call_user_func_array(array($sql, 'bind_param'), $param_array_reference);
-    }
+
     function insert($sql, $param_type, $param_array)
     {
         $query = $this->con->prepare($sql);
