@@ -228,7 +228,7 @@ if ($action == 'UserList') {
             $address =  $_POST['address'];
             include_once 'models/user.php';
             $user = new user();
-            $current_user = $user->updateuser($name,  $phone, $address, $email,);
+            $current_user = $user->updateuser($name,  $phone, $address, $email);
             if ($email != $oldEmail) {
                 $msg = "Login Again With New Email";
                 session_unset();

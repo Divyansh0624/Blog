@@ -41,7 +41,9 @@ if (isset($_SESSION['USER_LOGIN']) && $_SESSION['USER_LOGIN'] != '') {
     </style>
 </head>
 
-<body style="background-image: url('image/blog2.jpg');">
+<!-- <body style="background-image: url('image/blog2.jpg');"> -->
+
+<body>
     <form method=" POST">
         <div class="container">
             <h1>Your Blogs!</h1>

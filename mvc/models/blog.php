@@ -17,6 +17,7 @@ class blog
             $blog
         );
         $result = $this->db_handle->insert($sql, $param_type, $param_array);
+
         return $result;
     }
     function deleteblog($id)

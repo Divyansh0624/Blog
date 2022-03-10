@@ -68,19 +68,34 @@ if (isset($_POST['save'])) {
         }
     }
     if ($nameErr == '' && $emailErr == '' && $phoneErr == '' && $addressErr == '' && $passwordErr == '') {
-        $sql = "insert into `user` (`name`, `email`, `phone`, `address`, `password`,`status`) VALUES ('$name', '$email',
-    '$phone', '$address', '$password','0')";
-        //$res = mysqli_query($con, $sql);
-        //echo $res;
-        #$count = mysqli_fetch_assoc($res);
-
-        //$count = mysqli_num_rows($res);
-        //echo $count;
-        if (mysqli_query($con, $sql)) {
+        try {
+            mysqli_begin_transaction($con);
+            $sql = "insert into `user` (`name`, `email`, `phone`, `address`, `password`,`status`) VALUES ('$name', '$email',
+                '$phone', '$address', '$password','0')";
+            mysqli_query($con, $sql);
+            mysqli_commit($con);
             $msg = urldecode("Account Created ! You Can Login Now");
-            header('location:login.php?Message=' . $msg);
-            die();
+        } catch (Exception $e) {
+            // An exception has been thrown
+            // We must rollback the transaction
+            $msg = urldecode("There is some error ! Create account again");
+            mysqli_rollback($con);
         }
+        header('location:login.php?Message=' . $msg);
+        die();
+        //     $sql = "insert into `user` (`name`, `email`, `phone`, `address`, `password`,`status`) VALUES ('$name', '$email',
+        // '$phone', '$address', '$password','0')";
+        //     //$res = mysqli_query($con, $sql);
+        //     //echo $res;
+        //     #$count = mysqli_fetch_assoc($res);
+
+        //     //$count = mysqli_num_rows($res);
+        //     //echo $count;
+        //     if (mysqli_query($con, $sql)) {
+        //         $msg = urldecode("Account Created ! You Can Login Now");
+        //         header('location:login.php?Message=' . $msg);
+        //         die();
+        //     }
     }
 }
 function get_safe_value($con, $str)
