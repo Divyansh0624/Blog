@@ -9,10 +9,22 @@ if (isset($_POST['login'])) {
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
     <title>BLOG WEBSITE</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
 </head>
 <style>
 body {
@@ -42,14 +54,21 @@ table {
 <body>
     <form method="POST">
         <h1 style="text-align: center;background-color:skyblue"><b>Welcome to our Blog family!</b></h1>
-        <table class="table">
+        <nav class="navbar navbar-light bg-light">
+            <form class="container-fluid justify-content-start">
+                <button type="submit" name="login" class="btn btn-outline-success me-2" type="button">Login</button>
+                <button type="submit" name="register" class="btn btn-sm btn-outline-secondary"
+                    type="button">Register</button>
+            </form>
+        </nav>
+        <!-- <table class="table">
             <tr>
                 <td><button type="submit" name="login" style="background-color: skyblue;cursor: pointer;">LogIn</button>
                 </td>
                 <td><button type="submit" name="register"
                         style="background-color:aquamarine;cursor: pointer;">Register</button></td>
             </tr>
-        </table>
+        </table> -->
         <h3>What is a Blog ?</h3>
         <P>
             A blog (a truncation of "weblog")[1] is a discussion or informational website
@@ -89,7 +108,37 @@ table {
             served as a springboard to define future blogging styles that were captured by blogging software
             developed years later.
         </P>
+        <p id="moreabout">
+            <button id="More" class="btn btn-sm btn-outline-secondary">More</button>
+        </p>
     </form>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+    <script>
+    $(document).ready(function() {
+        $("#More").click(function() {
+            $("#More").hide();
+            const xhr = new XMLHttpRequest();
+            console.log("yes");
+            xhr.open('GET', 'ajax.txt', true)
+            xhr.onload = function() {
+                console.log("bye");
+                $("#moreabout").html(this.responseText);
+            }
+            xhr.send();
+        });
+    });
+    </script>
 </body>
 
 </html>
