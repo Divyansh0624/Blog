@@ -1,64 +1,54 @@
 <?php
 
 use App\Http\Controllers\userController;
-use App\task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 
-// Route::get('/newtask', function () {
-//     return view('tasks');
-// });
-// Route::post('data/{id}', [userController::class, 'getdata']);
-// Route::post('/task', function (Request $request) {
-//     $validator = Validator::make($request->all(), [
-//         'name' => 'required|max:255',
-//     ]);
-
-//     if ($validator->fails()) {
-//         return redirect('/')
-//             ->withInput()
-//             ->withErrors($validator);
-//     }
-
-//     $task = new task();
-//     $task->name = $request->name;
-//     $task->save();
-
-//     return redirect('/');
-// });
-// Route::get('/newtask', function () {
-//     $tasks = Task::orderBy('created_at', 'asc')->get();
-
-//     return view('tasks', [
-//         'tasks' => $tasks
-//     ]);
-// });
-
-// Route::delete('/task/{id}', function ($id) {
-//     Task::findOrFail($id)->delete();
-
-//     return redirect('/newtask');
-// });
-// // Route::delete('/task/{id}', [userController::class, 'deletedata']);
-// Route::get('user/create', 'userController@createuser');
-// Route::post('user/create', 'userController@storeuser');
 Route::get('/', function () {
     return view('welcome');
 });
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+Route::group(['middleware' => 'usersession'], function () {
+    Route::group(['middleware' => 'auth'], function () {
+        Route::patch('/update/password', 'adminController@updatePassword');
+        //Only for Admin
+        Route::group(['middleware' => 'isadmin'], function () {
+            Route::get('/addEmployee', 'adminController@getAdd');
+            Route::get('/employees', 'adminController@index');
+            Route::get('/empAttendance', 'adminController@getAttendace');
+            Route::get('/empSalary', 'adminController@getsalary');
+            Route::get('/adminprofile', 'adminController@getProfile');
+            Route::get('/passwordChange', 'adminController@getPassword');
+            Route::get('/requestPending', 'adminController@getPendingRequest');
+            Route::get('/requestPending/rejected/{id}', 'adminController@requestRejected')->where('id', '[0-9]+');
+            Route::get('/requestPending/approved/{id}', 'adminController@requestApproved')->where('id', '[0-9]+');
+            Route::patch('/adminprofile/update', 'adminController@updateprofile');
+            Route::get('/employee/edit/{id}', 'adminController@getedit')->where('id', '[0-9]+');
+            Route::put('/employee/edit/{id}', 'adminController@postedit')->where('id', '[0-9]+');
+            Route::patch('/salary/edit/{id}', 'adminController@salaryedit')->where('id', '[0-9]+');
+            Route::get('/employee/delete/{id}', 'adminController@delete')->where('id', '[0-9]+');
+            Route::get('/employee/search/{word}', 'adminController@search')->where('name', '[A-Za-z]+');
+        });
+        //Only for User
+        Route::group(['middleware' => 'isuser'], function () {
+            Route::get('/salary', 'employeeController@getsalary');
+            Route::post('/attendance/update', 'employeeController@attendanceRequest');
+            Route::get('/getTeamList', 'employeeController@getTeamList');
+            Route::post('/teamMember/add', 'employeeController@addMember');
+            Route::get('/attendance', 'employeeController@getattendance');
+            Route::get('/profile', 'employeeController@getprofile');
+            Route::get('/password', 'employeeController@getpassword');
+            Route::patch('/profile/update', 'employeeController@updateprofile');
+        });
+    });
+});
+Route::get('/{any}', function () {
+    return view('welcome');
+});

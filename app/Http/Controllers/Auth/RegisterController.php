@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use App\managerTeam;
+use App\salary;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -27,16 +30,18 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    private $user = "";
+    protected $redirectTo = '/addEmployee';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
+
     public function __construct()
     {
-        $this->middleware('guest');
+        // $this->middleware('guest');
     }
 
     /**
@@ -49,8 +54,11 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'phone' => 'required|regex:/[0-9]{10}/',
+            'role' => 'required|string|max:50',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'salary' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
         ]);
     }
 
@@ -62,10 +70,35 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        DB::beginTransaction();
+        try {
+            if (isset($data['isadmin'])) {
+                $user =  User::create([
+                    'name' => $data['name'],
+                    'phone' => $data['phone'],
+                    'role' => 'Admin',
+                    'email' => $data['email'],
+                    'admin' => 1,
+                    'password' => bcrypt($data['password']),
+                ]);
+            } else {
+                $user =  User::create([
+                    'name' => $data['name'],
+                    'phone' => $data['phone'],
+                    'role' => $data['role'],
+                    'email' => $data['email'],
+                    'password' => bcrypt($data['password']),
+                ]);
+            }
+
+            $salary = new salary();
+            $salary->salary = $data['salary'];
+            $user->salary()->save($salary);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return view('error.show');
+        }
+        DB::commit();
+        return $user;
     }
 }
