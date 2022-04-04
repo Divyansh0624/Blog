@@ -27,7 +27,7 @@ class adminController extends Controller
     public function index()
     {
         try {
-            $users = User::paginate(5);
+            $users = User::get();
         } catch (\Exception $exception) {
             return view('error.show');
         }
@@ -52,7 +52,7 @@ class adminController extends Controller
         try {
             $user_att = Attendance::select(DB::raw('user_id, SUM(if(`Attendance`=1,1,0)) as Present, SUM(if(`Attendance`=1,0,1)) as Absent, SUM(if(`request`="Pending",1,0)) as Request'))
                 ->groupBy('user_id')
-                ->get();
+                ->paginate(5);
             if (!$user_att) {
                 throw new ModelNotFoundException("No User");
             }

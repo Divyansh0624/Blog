@@ -15,7 +15,7 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/home') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-home"></i>
             <span>Dashboard</span></a>
     </li>
 
@@ -41,7 +41,7 @@
     @endif
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/attendance') }}">
-            <i class="fas fa-fw fa-certificate"></i>
+            <i class="fas fa-fw fa-calendar"></i>
             <span>Attandance</span></a>
     </li>
     <li class="nav-item active">

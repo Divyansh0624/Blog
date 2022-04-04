@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Attendance;
+use App\managerTeam;
 use App\salary;
 use App\User;
 use Illuminate\Http\Request;
@@ -37,13 +38,19 @@ class HomeController extends Controller
                     $array[2] = salary::sum('salary');
                     $array[3] = Attendance::select(DB::raw('SUM(if(`request`="Pending",1,0)) as Request'))
                         ->get();
-                    return view('admin.home', compact('array'));
                 } catch (\Exception $exception) {
                     return view('error.show');
                 }
+                return view('admin.home', compact('array'));
             } else {
                 try {
-                    return view('user.home');
+                    if (Auth::user()->role === 'Employee') {
+                        $manager = managerTeam::where('employee_id', Auth::user()->id)
+                            ->first();
+                        return view('user.home', compact('manager'));
+                    } else {
+                        return view('user.home');
+                    }
                 } catch (\Exception $exception) {
                     return view('error.show');
                 }

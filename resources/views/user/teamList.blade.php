@@ -81,7 +81,9 @@
                       @endforeach
                     </tbody>
                   </table>
-                  <a href="#"  title="request" type="button"  class="btn btn-success" data-toggle="modal" data-target="#addModal">Add Member</a>
+                  <div style="padding-left: 2%">
+                  <a href="#"  title="request" type="button"  class="btn btn-success" data-toggle="modal" data-target="#addModal" >Add Member</a>
+                  </div>
                   <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

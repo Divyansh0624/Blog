@@ -103,9 +103,13 @@
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                             Manager Name</div>
                                         @if(Auth::User()->role === 'Manager')
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{Auth::user()->name}}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{Auth::user()->name}} (You)</div>
                                         @else
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><h4>ABC</h4></div>
+                                            @if(isset($manager))
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$manager->user->name}}</div>
+                                            @else
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">N0 Manager</div>
+                                            @endif
                                         @endif
                                     </div>
                                     <div class="col-auto">

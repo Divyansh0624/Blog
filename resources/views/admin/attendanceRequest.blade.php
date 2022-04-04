@@ -53,7 +53,7 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-xs-6">
-                                <h2><b>Employees Attendance</b></h2>
+                                <h2><b>Employees Attendance Requests</b></h2>
                             </div>
                         </div>
                         @if(Session::has('message'))

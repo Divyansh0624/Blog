@@ -38,8 +38,10 @@
                     <div class="row justify-content-center">
                         <div class=" col-md-10 col-md-offset-2 ">
                             <div class="panel panel-default">
-                                <div class="panel-heading"><b>ADD NEW MEMBER</b></div>
-                
+                                <div class="panel-heading"><h3><b>ADD NEW MEMBER</b></h3></div>
+                                @if(Session::has('msg'))
+                                <div class="panel-heading " ><h4 style="color: green">{{Session::get('msg')}}</h4></div>
+                                @endif
                                 <div class="panel-body">
                                     <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                                         {{ csrf_field() }}
